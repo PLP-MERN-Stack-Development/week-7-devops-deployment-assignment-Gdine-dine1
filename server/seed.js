@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
-const Category = require('./models/Category'); // use capital 'C' to match other imports
+const Category = require('./models/category'); // use lowercase to match actual filename
 
 const seed = async () => {
   try {
