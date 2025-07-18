@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Login() {
@@ -12,7 +12,7 @@ function Login() {
     e.preventDefault();
     setError('');
     try {
-      const res = await axios.post('/api/users/login', { email, password });
+      const res = await api.post('/api/users/login', { email, password });
 
       // Optional: Store entire user or just token
       localStorage.setItem('token', res.data.token);

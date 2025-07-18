@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -10,7 +10,7 @@ function Home() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get('/api/posts');
+        const res = await api.get('/api/posts');
         if (Array.isArray(res.data)) {
           setPosts(res.data);
         } else {

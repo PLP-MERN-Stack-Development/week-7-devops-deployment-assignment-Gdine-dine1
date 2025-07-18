@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 
 function PostForm() {
   const [title, setTitle] = useState('');
@@ -16,7 +16,7 @@ function PostForm() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get('/api/categories');
+        const res = await api.get('/api/categories');
         setCategories(res.data);
       } catch (err) {
         console.error('Failed to fetch categories:', err);
@@ -26,7 +26,7 @@ function PostForm() {
 
     const fetchPost = async () => {
       try {
-        const res = await axios.get(`/api/posts/${id}`);
+        const res = await api.get(`/api/posts/${id}`);
         setTitle(res.data.title);
         setContent(res.data.content);
         setCategory(res.data.category?._id || '');
@@ -44,21 +44,14 @@ function PostForm() {
     e.preventDefault();
     setLoading(true);
 
-    const token = localStorage.getItem('token');
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    };
-
     const payload = { title, content, category };
 
     try {
       if (id) {
-        await axios.put(`/api/posts/${id}`, payload, config);
+        await api.put(`/api/posts/${id}`, payload);
         alert('✅ Post updated successfully');
       } else {
-        await axios.post('/api/posts', payload, config);
+        await api.post('/api/posts', payload);
         alert('✅ Post created successfully');
       }
       navigate('/home');
