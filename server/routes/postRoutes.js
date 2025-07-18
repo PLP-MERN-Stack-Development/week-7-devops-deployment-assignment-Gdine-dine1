@@ -6,7 +6,7 @@ const {
   updatePost,
   deletePost,
   getMyPosts
-} = require('../controllers/postController'); // ✅ Correct casing
+} = require('../controllers/postcontroller'); // fixed case
 
 const { protect } = require('../middleware/authMiddleware'); // ✅ Add this
 
