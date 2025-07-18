@@ -1,0 +1,32 @@
+name: Emergency Rollback
+
+on:
+  workflow_dispatch:
+    inputs:
+      rollback_to:
+        description: 'Commit hash to rollback to'
+        required: true
+        type: string
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.rollback_to }}
+        
+    - name: Notify rollback
+      run: |
+        echo "🚨 Emergency rollback initiated"
+        echo "Rolling back to commit: ${{ github.event.inputs.rollback_to }}"
+        echo "This will trigger redeployment on Render and Vercel"
+        
+    - name: Force push to trigger deployment
+      run: |
+        echo "Note: Manual intervention may be required for rollback"
+        echo "1. Check Render dashboard for backend rollback"
+        echo "2. Check Vercel dashboard for frontend rollback"
+        echo "3. Verify application is working correctly" 

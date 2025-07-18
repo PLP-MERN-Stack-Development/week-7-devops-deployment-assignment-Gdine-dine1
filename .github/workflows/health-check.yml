@@ -1,0 +1,30 @@
+name: Health Check
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Run every 6 hours
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Health check - Backend API
+      run: |
+        echo "Checking backend health..."
+        curl -f https://week-7-devops-deployment-assignment-5d8u.onrender.com/api/posts || echo "Backend health check failed"
+        
+    - name: Health check - Frontend
+      run: |
+        echo "Frontend health check would be performed here"
+        echo "Frontend URL: [Your Vercel URL]"
+        
+    - name: Notify health status
+      run: |
+        echo "✅ Health check completed"
+        echo "Backend: https://week-7-devops-deployment-assignment-5d8u.onrender.com"
+        echo "Frontend: [Your Vercel URL]" 

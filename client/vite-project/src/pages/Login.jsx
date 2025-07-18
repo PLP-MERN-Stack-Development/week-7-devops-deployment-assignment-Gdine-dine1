@@ -3,7 +3,7 @@ import api from '../services/api';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Login() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ function Login() {
     e.preventDefault();
     setError('');
     try {
-      const res = await api.post('/api/users/login', { email, password });
+      const res = await api.post('/api/users/login', { username, password });
 
       // Optional: Store entire user or just token
       localStorage.setItem('token', res.data.token);
@@ -33,10 +33,10 @@ function Login() {
       {error && <p className="text-red-500 text-center">{error}</p>}
 
       <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={e => setUsername(e.target.value)}
         className="w-full border p-2 rounded"
         required
       />
